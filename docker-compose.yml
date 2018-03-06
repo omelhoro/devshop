@@ -2,32 +2,15 @@ version: '2'
 services:
 
   devshop-vtex:
-    image: omelhoro1/devshop-vtex
-    container_name: devshop-vtex
+    image: omelhoro1/devshop-react-redux
+    container_name: devshop-react-redux
     restart: unless-stopped
-    # ports:
-    #   - "3000:3000"
     env_file:
       - /home/captain/vault/secrets
     labels:
-      - "traefik.frontend.rule=Host:devshop-vtex.igor-fischer.rocks,devshop-react.fischerops.com,devshop-react.software-unchained.com"
+      - "traefik.frontend.rule=Host:devshop-react-redux.software-unchained.com"
     volumes:
       - /tmp/db:/app/db
-    networks:
-      - proxy-tier
-
-  devshop-vtex-ng2:
-    image: omelhoro1/devshop-ng2
-    container_name: devshop-ng2
-    restart: unless-stopped
-    # ports:
-    #   - "3001:3001"
-    env_file:
-      - /home/captain/vault/secrets
-    labels:
-      - "traefik.frontend.rule=Host:devshop-ng2.igor-fischer.rocks,devshop-ng2.fischerops.com,devshop-ng.software-unchained.com"
-    environment:
-      - PROXY_URL=http://devshop-vtex:3000
     networks:
       - proxy-tier
 

@@ -1,37 +1,21 @@
 pipeline:
 
-  build:
-    image: node
-    secrets: [ vault_pass ]
-    commands:
-      - npm i --loglevel silent
-
-      # - wget -c wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      # - dpkg -i google-chrome-*.deb
-      # - apt-get install -f
-      # - apt-get update
-      # - apt-get install -y default-jre
-      # - npm i -g protractor
-      # - webdriver-manager update
-      # - webdriver-manager start &
-      # - npm run test-ui
-
-      # - npm rebuild leveldown
-      # - npm rebuild levelup
-      # - npm rebuild node-sass
-      # - npm rebuild phantomjs-prebuilt
-
-      - VAULT_PASS="$${VAULT_PASS}" ./vault/decrypt.sh
-
-      - npm run test-unitserver
-      - DB_PATH=/tmp/db npm run test-integration
-      - npm run test-unitclient
+  # build:
+  #   image: node
+  #   secrets: [ vault_pass ]
+  #   commands:
+  #     - npm i --loglevel silent
+  #     - VAULT_PASS="$${VAULT_PASS}" ./vault/decrypt.sh
+  #
+  #     - npm run test-unitserver
+  #     - DB_PATH=/tmp/db npm run test-integration
+  #     - npm run test-unitclient
       # - npm run lint
 
   docker:
     image: plugins/docker
     storage_driver: vfs
-    repo: omelhoro1/devshop-vtex
+    repo: omelhoro1/devshop-react-redux
     secrets: [ docker_username, docker_password ]
     when:
       branch: master
@@ -49,7 +33,7 @@ pipeline:
     delete: false
     secrets: [ rsync_key ]
     script:
-      - docker-compose -f /tmp/devshop-vtex-${DRONE_COMMIT}/docker-compose.yml pull
-      - docker-compose -f /tmp/devshop-vtex-${DRONE_COMMIT}/docker-compose.yml -p devshop-vtex up -d
+      - docker-compose -f /tmp/devshop-react-redux-${DRONE_COMMIT}/docker-compose.yml pull
+      - docker-compose -f /tmp/devshop-react-redux-${DRONE_COMMIT}/docker-compose.yml -p devshop-react-redux up -d
     when:
       branch: master

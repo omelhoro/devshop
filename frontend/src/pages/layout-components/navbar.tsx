@@ -28,7 +28,9 @@ export default props => (
 				<li className="nav-item">
 					<NavLink className="nav-link" to="/shopping">
 						<i className="material-icons md-24">shop</i>
-						Shop
+						<span>
+							Shop
+						</span>
 					</NavLink>
 				</li>
 

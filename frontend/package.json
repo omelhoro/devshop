@@ -64,6 +64,7 @@
     "ts-loader": "4.0.1",
     "tslib": "1.9.0",
     "typescript": "^2.8.0-dev.20180302",
+    "typestyle": "^1.7.2",
     "url-join": "^4.0.0",
     "utility-types": "1.0.0",
     "webpack": "4",

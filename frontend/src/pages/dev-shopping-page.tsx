@@ -341,12 +341,17 @@ export class DevShoppingPage extends React.Component<IDevShoppingPageProps, any>
 								<div >
 									<ul className="list-group">
 										{this.props
-											.developersInCart
-											.map((developer, index) => (<CartElement
-												key={`${developer.login}`}
-												element={developer}
-												removeFromCart={() => this.actions.removeFromCart(developer)}
-											/>))}
+											.developersInCart.length ? (this.props
+												.developersInCart
+												.map((developer, index) => (<CartElement
+													key={`${developer.login}`}
+													element={developer}
+													removeFromCart={() => this.actions.removeFromCart(developer)}
+												/>))) : (
+												<i className="material-icons md-48" style={{ margin: '0px auto' }}>
+													shopping_cart
+												</i>
+											)}
 									</ul>
 									<div
 										className="input-group mb-3"

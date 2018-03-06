@@ -33,7 +33,7 @@ export default class SearchPanel extends React.Component<ISearchPanelProps, any>
 								>
 									<span
 										className="input-group-text"
-										style={{ minWidth: '140px' }}
+										style={{ minWidth: '150px' }}
 									>
 										By User
 									</span>
@@ -52,9 +52,16 @@ export default class SearchPanel extends React.Component<ISearchPanelProps, any>
 										type="submit"
 										style={{
 											display: 'inline-flex',
+											minWidth: '110px',
 										}}
 									>
-										<i className="material-icons">person</i>
+										{this.props.resultsLoading ? (
+											<i className="fa fa-spinner fa-spin" style={{ padding: '4px' }}>
+											</i>
+										) :
+											(
+												<i className="material-icons" style={{ marginRight: '4px' }}>person</i>
+											)}
 										<span>
 											Import!
 										</span>
@@ -81,7 +88,7 @@ export default class SearchPanel extends React.Component<ISearchPanelProps, any>
 								<span
 									className="input-group-prepend"
 								>
-									<div className="input-group-text" style={{ minWidth: '140px' }}>
+									<div className="input-group-text" style={{ minWidth: '150px' }}>
 										By Organization
 									</div>
 								</span>
@@ -93,9 +100,16 @@ export default class SearchPanel extends React.Component<ISearchPanelProps, any>
 										type="submit"
 										style={{
 											display: 'inline-flex',
+											minWidth: '110px',
 										}}
 									>
-										<i className="material-icons">group</i>
+										{this.props.resultsLoading ? (
+											<i className="fa fa-spinner fa-spin" style={{ padding: '4px' }}>
+											</i>
+										) :
+											(
+												<i className="material-icons" style={{ marginRight: '4px' }}>group</i>
+											)}
 										<span>
 											Import!
 										</span>

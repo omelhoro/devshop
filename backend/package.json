@@ -26,7 +26,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec \"ts-node main.ts\" -e ts",
-    "start": "ts-node main.ts"
+    "start": "./vault/decrypt.sh && ts-node main.ts"
   },
   "author": "",
   "license": "ISC"

@@ -1,0 +1,12 @@
+node_modules
+
+frontend/node_modules
+frontend/dist
+frontend/out
+frontend/old-src
+
+backend/node_modules
+backend/node_modules-docker
+backend/db
+
+.git*

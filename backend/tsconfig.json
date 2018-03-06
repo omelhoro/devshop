@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es5",
+    "sourceMap": true,
+    "skipDefaultLibCheck": true,
+    "strict": false,
+    "noUnusedLocals": true,
+    "types": ["node"],
+    "lib": [
+      "es6",
+    ]
+  },
+  "exclude": [
+    "bin",
+    "node_modules",
+    "**/*.spec.tsx"
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "baseDir": "./",
+  "webpackConfig": "./configs/madge.config.js"
+}

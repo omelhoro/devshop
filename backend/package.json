@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "@types/node": "^9.4.6",
+    "bluebird": "^3.5.1",
+    "express": "^4.16.2",
+    "github": "^13.1.0",
+    "leveldown": "^3.0.0",
+    "levelup": "^2.0.2",
+    "mailgun-js": "^0.16.0",
+    "node-uuid": "^1.4.8",
+    "nodemon": "^1.17.1",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2",
+    "url-join": "^4.0.0"
+  },
+  "devDependencies": {
+    "cors": "^2.8.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec \"ts-node main.ts\" -e ts",
+    "start": "ts-node main.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}

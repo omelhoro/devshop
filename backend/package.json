@@ -15,12 +15,12 @@
     "levelup": "^2.0.2",
     "mailgun-js": "^0.16.0",
     "node-uuid": "^1.4.8",
-    "nodemon": "^1.17.1",
     "ts-node": "^5.0.1",
     "typescript": "^2.7.2",
     "url-join": "^4.0.0"
   },
   "devDependencies": {
+    "nodemon": "^1.17.1",
     "cors": "^2.8.4"
   },
   "scripts": {

@@ -25,7 +25,7 @@ pipeline:
     user: captain
     hosts: [ "software-unchained.com" ]
     port: 22
-    target: /tmp/devshop-vtex-${DRONE_COMMIT}/
+    target: /tmp/devshop-react-redux-${DRONE_COMMIT}/
     include:
       - "docker-compose.yml"
     exclude:

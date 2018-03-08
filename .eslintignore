@@ -1,1 +1,8 @@
-node_modules
+node_modules/*
+/**/node_modules/*
+/**/out/*
+/**/dist/*
+/**/node_modules-docker/*
+
+# there we're using tslint
+frontend-ng5

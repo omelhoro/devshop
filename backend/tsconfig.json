@@ -8,11 +8,15 @@
     "skipDefaultLibCheck": true,
     "strict": false,
     "noUnusedLocals": true,
+    "outDir": "out/",
     "types": ["node"],
     "lib": [
       "es6",
     ]
   },
+  "include": [
+    "./main.ts"
+  ],
   "exclude": [
     "bin",
     "node_modules",

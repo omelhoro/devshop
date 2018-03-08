@@ -22,12 +22,16 @@ app.post('/api/order', processOrder);
 app.get('/api/order', getOrder);
 
 if (isDeveloping) {
-	console.log('Dev env');
+	console.log('In dev mode this backend is only an API, it\'s not serving html.');
 } else {
-	app.use(express.static(path.join(__dirname, './dist')));
-	app.get('*', (req, res) => {
-		res.sendFile(path.join(__dirname, './dist/index.html'));
+	app.use(express.static(path.join(__dirname, './www')));
+	app.get('/ng/*', (req, res) => {
+		res.sendFile(path.join(__dirname, './www/ng/index.html'));
 	});
+	app.get('/react/*', (req, res) => {
+		res.sendFile(path.join(__dirname, './www/react/index.html'));
+	});
+
 }
 
 const port = 10001;

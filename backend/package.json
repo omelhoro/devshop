@@ -25,8 +25,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec \"ts-node main.ts\" -e ts",
-    "start": "./vault/decrypt.sh && ts-node main.ts"
+    "dev": "nodemon --exec \"cp index.html www && ts-node --typeCheck main.ts\" -e ts,html ",
+    "start": "./vault/decrypt.sh && cp index.html www && ts-node --typeCheck main.ts"
   },
   "author": "",
   "license": "ISC"

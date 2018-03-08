@@ -26,6 +26,7 @@ module.exports = {
 		"no-restricted-globals": 0,
 		"no-else-return": 0,
 		"no-confusing-arrow": 0,
+		"no-useless-constructor": 0,
 		// no need since using typescript
 		"react/prop-types": 0,
 		"import/no-extraneous-dependencies": 0,

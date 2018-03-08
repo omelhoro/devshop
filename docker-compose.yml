@@ -1,14 +1,14 @@
 version: '2'
 services:
 
-  devshop-vtex:
-    image: omelhoro1/devshop-react-redux
-    container_name: devshop-react-redux
+  devshop:
+    image: omelhoro1/devshop
+    container_name: devshop
     restart: unless-stopped
     env_file:
       - /home/captain/vault/secrets
     labels:
-      - "traefik.frontend.rule=Host:devshop-react-redux.software-unchained.com"
+      - "traefik.frontend.rule=Host:devshop.software-unchained.com"
     volumes:
       - /tmp/db:/app/db
     networks:

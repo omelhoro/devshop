@@ -1,0 +1,40 @@
+/*styles for home content only*/
+.card-container{
+    display: flex;
+    flex-direction: column;
+    /* margin: 15px; */
+
+}
+.sample-content{
+    flex: 1;
+}
+.card-container md-card{
+    margin: 5px;
+}
+.shopping-card-title {
+  margin-left: 20px;
+}
+
+.coupon-code {
+  margin: 0 auto;
+}
+
+.shopping-cols {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  width: 33%;
+}
+
+.shopping-cols button {
+  width: 100%;
+}
+
+.search-form {
+  width: 250px;
+}
+
+.shopping-cart-column {
+  margin-right: 0px;
+
+}

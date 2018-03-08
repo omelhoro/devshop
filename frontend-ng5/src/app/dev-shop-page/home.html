@@ -1,0 +1,121 @@
+<div class="card-container" style="margin-top: 10px">
+	<mat-card>
+		<mat-card-title>Search for developers</mat-card-title>
+		<mat-card-content>
+
+			<form (ngSubmit)="importOrg(buffer.lastOrgSearch)" autocomplete="off">
+
+				<mat-form-field class="search-form">
+					<input matInput placeholder="Import Organization" [value]="buffer.lastOrgSearch" (input)="buffer.lastOrgSearch = $event.target.value" autofocus />
+				</mat-form-field>
+
+				<button class="button-remove" mat-mini-fab color="primary">
+          <mat-icon>people</mat-icon>
+        </button>
+			</form>
+
+			<form (ngSubmit)="importUser(buffer.lastUserSearch)" autocomplete="off">
+
+				<mat-form-field class="search-form">
+					<input matInput placeholder="Import User" name="username" [(ngModel)]="buffer.lastUserSearch" autofocus />
+				</mat-form-field>
+
+				<button class="button-remove" mat-mini-fab color="primary">
+          <mat-icon>person</mat-icon>
+        </button>
+			</form>
+
+
+			<!--
+        <input type="text" [value]="appStore.state.value" s(input)="appStore.state.value = $event.target.value" autofocus>
+        Rather than wiring up two-way data-binding ourselves with [value] and (input)
+        we can use Angular's [(ngModel)] syntax
+        <input type="text" [(ngModel)]="appStore.state.value" autofocus>
+      -->
+
+		</mat-card-content>
+	</mat-card>
+	<mat-divider></mat-divider>
+
+	<div layout="column" style="display: flex; margin-top: 10px">
+		<div class="shopping-cols">
+			<div [hidden]="!appStore.state.developers">
+				<mat-paginator style="margin-bottom: 10px;" [length]="appStore.state.developers.length" [pageSize]="appStore.state.pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChangeRequest($event)">
+				</mat-paginator>
+				<dev-item *ngFor="let dev of appStore.state.developersPaged[appStore.state.currentPage]" [canOrder]="appStore.state.orderStage === 'choosing'" [dev]="dev">
+				</dev-item>
+			</div>
+
+		</div>
+
+		<div class="shopping-cols">
+			<mat-card>
+				<button [disabled]="appStore.state.orderStage === 'confirm' || !appStore.state.shoppingCart.length" (click)="resetCart()" mat-raised-button color="accent">
+        Reset cart
+      </button>
+
+				<mat-list>
+					<cart-item *ngFor="let dev of appStore.state.shoppingCart" [canOrder]="appStore.state.orderStage === 'choosing'" [dev]="dev">
+					</cart-item>
+
+				</mat-list>
+
+
+				<form class="coupon-code" (ngSubmit)="validateCoupon(buffer.coupon)">
+
+					<mat-form-field class="">
+						<input matInput name="coupon" [disabled]="appStore.state.orderStage === 'confirm'" placeholder="Coupon" [(ngModel)]="buffer.coupon" autofocus />
+					</mat-form-field>
+
+				</form>
+
+				<div [hidden]="!appStore.state.discount" style="margin: 0 auto;">
+					<h2>
+          Discount: - {{appStore.state.discount}}%
+        </h2>
+				</div>
+
+				<h3 style="text-align: center;">Value of {{appStore.state.sum | number}}$</h3>
+
+				<button [disabled]="appStore.state.orderStage === 'confirm' || !appStore.state.shoppingCart.length" (click)="goToConfirmOrder()" mat-raised-button color="primary" style="margin: 10px">
+        Order
+      </button>
+			</mat-card>
+
+		</div>
+
+		<div class="shopping-cols shopping-cart-column">
+			<mat-card>
+
+				<div [hidden]="appStore.state.orderStage !== 'confirm'">
+
+					<button (click)="revertConfirm()" mat-raised-button color="accent">
+        Revert
+      </button>
+
+					<h2>
+          Confirm your order of {{appStore.state.sum | number}}$
+        </h2>
+
+					<mat-form-field class="" style="width: 100%">
+						<input matInput placeholder="Your email for getting the confirmation" [(ngModel)]="buffer.email" autofocus />
+					</mat-form-field>
+
+
+					<div [hidden]="appStore.state.token">
+						<button (click)="confirmOrder()" mat-raised-button color="primary">
+          Confirm
+        </button>
+					</div>
+
+					<div [hidden]="!appStore.state.token">
+						<button (click)="startFromScratch()" mat-raised-button color="primary">
+          Start new shopping tour
+        </button>
+					</div>
+
+				</div>
+			</mat-card>
+		</div>
+
+	</div>

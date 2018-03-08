@@ -13,7 +13,7 @@
 ![](https://raw.githubusercontent.com/piotrwitek/react-redux-typescript-webpack-starter/docs/images/dev.gif)
 
 - Dependency graph of the entire application! 🌟 __NEW__  
-![](./frontend/dependencygraph-develop.png)
+![](./frontend-react/dependencygraph-develop.png)
 
 ---
 

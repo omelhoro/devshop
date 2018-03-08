@@ -15,7 +15,7 @@ pipeline:
   docker:
     image: plugins/docker
     storage_driver: vfs
-    repo: omelhoro1/devshop-react-redux
+    repo: omelhoro1/devshop
     secrets: [ docker_username, docker_password ]
     when:
       branch: master
@@ -25,7 +25,7 @@ pipeline:
     user: captain
     hosts: [ "software-unchained.com" ]
     port: 22
-    target: /tmp/devshop-react-redux-${DRONE_COMMIT}/
+    target: /tmp/devshop-${DRONE_COMMIT}/
     include:
       - "docker-compose.yml"
     exclude:
@@ -33,7 +33,7 @@ pipeline:
     delete: false
     secrets: [ rsync_key ]
     script:
-      - docker-compose -f /tmp/devshop-react-redux-${DRONE_COMMIT}/docker-compose.yml pull
-      - docker-compose -f /tmp/devshop-react-redux-${DRONE_COMMIT}/docker-compose.yml -p devshop-react-redux up -d
+      - docker-compose -f /tmp/devshop-${DRONE_COMMIT}/docker-compose.yml pull
+      - docker-compose -f /tmp/devshop-${DRONE_COMMIT}/docker-compose.yml -p devshop up -d
     when:
       branch: master

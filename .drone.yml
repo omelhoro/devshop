@@ -13,7 +13,7 @@ pipeline:
       # - npm run lint
 
   docker:
-    image: plugins/docker
+    image: plugins/docker:latest
     storage_driver: vfs
     repo: omelhoro1/devshop
     secrets: [ docker_username, docker_password ]

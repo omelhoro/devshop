@@ -282,7 +282,7 @@ export class DevShoppingPage extends React.Component<IDevShoppingPageProps, any>
 							<Pagination
 								pages={this.props.pagedDevList.length}
 								currentPage={this.props.currentPage}
-								onPageChange={page => this.actions.changePage(page)}
+								onPageChange={(page) => this.actions.changePage(page)}
 							/>
 						</div>
 
@@ -291,7 +291,7 @@ export class DevShoppingPage extends React.Component<IDevShoppingPageProps, any>
 							.map((developer, index) =>
 								(<ListElement
 									key={`developer-entry-${developer.login}`}
-									onHoursChange={evt =>
+									onHoursChange={(evt) =>
 										this.actions.changeDevHours(developer, Number(evt.target.value))
 									}
 									addDevelopersToCart={() =>
@@ -311,7 +311,7 @@ export class DevShoppingPage extends React.Component<IDevShoppingPageProps, any>
 							<Pagination
 								pages={this.props.pagedDevList.length}
 								currentPage={this.props.currentPage}
-								onPageChange={page => this.actions.changePage(page)}
+								onPageChange={(page) => this.actions.changePage(page)}
 							/>
 						</div>
 
@@ -357,7 +357,7 @@ export class DevShoppingPage extends React.Component<IDevShoppingPageProps, any>
 											id="coupon-entry"
 											placeholder="e.g. SHIPIT"
 											value={this.props.coupon}
-											onChange={evt => this.actions.onCouponChange(evt.target.value)}
+											onChange={(evt) => this.actions.onCouponChange(evt.target.value)}
 											className="form-control"
 											type="text"
 										/>

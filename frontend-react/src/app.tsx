@@ -11,12 +11,12 @@ import Layout from 'pages/layout';
 import DevShoppingPage from 'pages/dev-shopping-page';
 import ShowOrderPage from 'pages/show-order-page';
 
-interface Props {
+interface IProps {
 	store: Store<any>;
 	history: History;
 }
 
-class App extends React.Component<Props, {}> {
+class App extends React.Component<IProps, {}> {
 	render() {
 		// const { store, history } = this.props;
 		return (
@@ -52,4 +52,5 @@ class App extends React.Component<Props, {}> {
 	}
 }
 
+// tslint:disable-next-line
 export default module.hot ? require('react-hot-loader').hot(module)(App) : App;

@@ -19,31 +19,16 @@ interface IActions {
 	showError: (errorMsg: string) => { errorMsg: string },
 }
 
-interface IWorkers {
-	// doubleCounterAsync: (action) => void,
-}
-
-// function* parseError(error) {
-// 	try {
-// 		const errorBody = error.json ? yield error.json() : '';
-// 		console.log(errorBody);
-// 		return 'Ein unbekannter Fehler ist aufgetaucht';
-// 	} catch (err) {
-// 		console.info('False error format=', error);
-// 		return '';
-// 	}
-// }
-
-const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
+const logic = kea<IActions, IReducerState, ISelectorState, {}>({
 
 	path: () => ['scenes', 'counter'],
 
 	actions: () => ({
-		increment: amount => ({ amount }),
-		decrement: amount => ({ amount }),
-		doubleAsync: amount => ({ amount }),
-		set: amount => ({ amount }),
-		showError: errorMsg => ({ errorMsg }),
+		increment: (amount) => ({ amount }),
+		decrement: (amount) => ({ amount }),
+		doubleAsync: (amount) => ({ amount }),
+		set: (amount) => ({ amount }),
+		showError: (errorMsg) => ({ errorMsg }),
 	}),
 
 	reducers: ({ actions }) => ({
@@ -86,14 +71,13 @@ type ICounterPageProps =
 
 export class CounterPage extends React.Component<ICounterPageProps, any> {
 
+	actions: IActions;
 
 	componentDidMount() {
 		setInterval(() => {
 			this.actions.increment(1);
 		}, 1000);
 	}
-
-	actions: IActions;
 
 	render() {
 		const { counter } = this.props;

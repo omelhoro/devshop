@@ -13,7 +13,7 @@ const iconStyle = style({
 	right: '5px',
 });
 
-export default props => (
+export default (props) => (
 	<nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#e3f2fd' }}>
 		<button
 			className="navbar-toggler" type="button"

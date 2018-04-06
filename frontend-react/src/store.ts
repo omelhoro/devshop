@@ -7,12 +7,12 @@ import { reducer as formReducer } from 'redux-form';
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href')!;
 export const history = createBrowserHistory({ basename: baseUrl });
 
-
 if ((module as any).hot && localStorage.shouldSaveState) {
 	const initialStateLocalStorage =
 		localStorage.getItem('reduxState') ? JSON.parse(localStorage.getItem('reduxState')) : '';
-	if (initialStateLocalStorage)
+	if (initialStateLocalStorage) {
 		(window as any).initialReduxState = initialStateLocalStorage;
+	}
 }
 const initialState = ((window as any).initialReduxState);
 

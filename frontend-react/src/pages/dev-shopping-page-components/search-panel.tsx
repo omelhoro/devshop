@@ -1,15 +1,15 @@
 import * as React from 'react';
 
+interface ISearchPanelProps {
+	developers: any[],
+	resultsLoading: { orgLoading: boolean, devLoading: boolean },
+	addDevFromName(name: string): void,
+	addDevFromOrgName(name: string): void,
+}
+
 export const getValue = (elem) => document
 	.querySelector(elem)
 	.value;
-
-interface ISearchPanelProps {
-	addDevFromName(name: string): void,
-	developers: any[],
-	resultsLoading: { orgLoading: boolean, devLoading: boolean };
-	addDevFromOrgName(name: string): void,
-}
 
 export default class SearchPanel extends React.Component<ISearchPanelProps, any> {
 

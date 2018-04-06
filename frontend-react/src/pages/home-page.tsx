@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-/* eslint-disable */
+/* tslint:disable */
 export default class HomePage extends React.Component<any, any> {
 
 	render() {

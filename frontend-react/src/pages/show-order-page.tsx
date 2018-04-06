@@ -13,18 +13,11 @@ interface IReducerState {
 	errorMsg: string
 }
 
-interface ISelectorState {
-}
-
 interface IActions {
 	setOrder(order: IOrder): { order: IOrder },
 	getOrder(): any,
 	onLoadError(errorMsg: string): { errorMsg: string },
 
-}
-
-interface IWorkers {
-	// getOrder: (action) => void,
 }
 
 interface IDeveloper {
@@ -42,14 +35,14 @@ interface IOrder {
 	timestamp: string,
 }
 
-const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
+const logic = kea<IActions, IReducerState, {}, {}>({
 
 	path: () => ['scenes', 'show-order'],
 
 	actions: () => ({
-		setOrder: order => ({ order }),
+		setOrder: (order) => ({ order }),
 		getOrder: () => (0),
-		onLoadError: errorMsg => ({ errorMsg }),
+		onLoadError: (errorMsg) => ({ errorMsg }),
 	}),
 
 	reducers: ({ actions }) => ({
@@ -94,7 +87,7 @@ const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
 });
 
 type IShowOrderPageProps =
-	IReducerState & ISelectorState;
+	IReducerState & {};
 
 export class ShowOrderPage extends React.Component<IShowOrderPageProps, any> {
 
@@ -116,7 +109,7 @@ export class ShowOrderPage extends React.Component<IShowOrderPageProps, any> {
 								{' '}
 								with a total value of <i>{this.props.order.sum}$</i>
 							</h2>
-							{(this.props.order.cart).map(developer => (
+							{(this.props.order.cart).map((developer) => (
 								<OrderElement
 									key={`${developer.login}`}
 									developer={developer}

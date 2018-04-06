@@ -4,7 +4,7 @@ const redirect = (token) => {
 	location.href = `${location.origin}/show-order?token=${token}`;
 };
 
-export const getValue = elem => document
+export const getValue = (elem) => document
 	.querySelector(elem)
 	.value;
 

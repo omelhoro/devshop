@@ -15,6 +15,7 @@ const app = express();
 app.use(bodyParser.json());
 
 if (isDeveloping) {
+	// tslint:disable-next-line
 	app.use(require('cors')());
 }
 

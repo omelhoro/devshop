@@ -16,7 +16,7 @@ pipeline:
     image: plugins/docker
     storage_driver: vfs
     repo: omelhoro1/devshop
-    secrets: [ docker_username, docker_password
+    secrets: [ docker_username, docker_password ]
     build_args:
       - "MYENV=lala it is great"
       - "DOCKER_USERNAME=$${DOCKER_USERNAME}"

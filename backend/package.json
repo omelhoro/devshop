@@ -9,9 +9,10 @@
   "dependencies": {
     "@types/node": "^9.4.6",
     "bluebird": "^3.5.1",
+    "colors": "^1.2.1",
     "express": "^4.16.2",
     "github": "^13.1.0",
-    "colors": "^1.2.1",
+    "isomorphic-fetch": "^2.2.1",
     "leveldown": "^3.0.0",
     "levelup": "^2.0.2",
     "mailgun-js": "^0.16.0",

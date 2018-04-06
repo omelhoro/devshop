@@ -1,5 +1,5 @@
 ARG docker_username
-ARG DOCKER_USERNAME
+ARG DOCKER_USERNAMED
 
 FROM node:9-alpine as frontend-react-builder
 

@@ -1,4 +1,7 @@
 FROM node:9-alpine as frontend-react-builder
+
+RUN env
+
 WORKDIR /app
 RUN apk add --no-cache bash git
 COPY ./frontend-react/package.json /app

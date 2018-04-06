@@ -17,14 +17,14 @@ pipeline:
     storage_driver: vfs
     repo: omelhoro1/devshop
     secrets: [ docker_username, docker_password ]
-    build_args:
-      # - "MYENV=lala it is great"
-      # - "DOCKER_USERNAMED=$${DOCKER_USERNAME}"
-      # - DOCKER_USERNAMEDED=$DOCKER_USERNAME
-      # - DOCKER_USERNAMEDEDED=$docker_username
-      - docker_username
-      - docker_password
-    build_args_from_env: [ docker_username, DOCKER_USERNAME ]
+    # build_args:
+    #   # - "MYENV=lala it is great"
+    #   # - "DOCKER_USERNAMED=$${DOCKER_USERNAME}"
+    #   # - DOCKER_USERNAMEDED=$DOCKER_USERNAME
+    #   # - DOCKER_USERNAMEDEDED=$docker_username
+    #   - docker_username
+    #   - docker_password
+    build_args_from_env: [ DOCKER_USERNAME ]
     # args:
     #   - docker_username
     #   - DOCKER_USERNAMEDED=$DOCKER_USERNAME

@@ -1,10 +1,8 @@
-ARG docker_username
 ARG DOCKER_USERNAME
 
 FROM node:9-alpine as frontend-react-builder
 
 RUN env
-RUN echo $docker_username
 RUN echo $DOCKER_USERNAME
 
 WORKDIR /app
@@ -42,15 +40,3 @@ COPY --from=frontend-ng-builder /app/dist ./www/ng
 
 CMD npm run start;
 EXPOSE 10001
-
-docker run --rm \
-  -e PLUGIN_BUILD_ARGS='foo=bar,baz=boo' \
-  -e TOP_SECRET=password \
-  -e PLUGIN_BUILD_ARGS_FROM_ENV=top_secret \
-  -e PLUGIN_TAG=latest \
-  -e PLUGIN_REPO=octocat/hello-world \
-  -e DRONE_COMMIT_SHA=d8dbe4d94f15fe89232e0402c6e8a0ddf21af3ab \
-  -v $(pwd):$(pwd) \
-  -w $(pwd) \
-  --privileged \
-  plugins/docker --dry-run

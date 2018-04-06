@@ -1,7 +1,7 @@
 FROM node:9-alpine as frontend-react-builder
 
-ARG DOCKER_USERNAME
-RUN echo $DOCKER_USERNAME
+ARG docker_username
+RUN echo $docker_username
 
 WORKDIR /app
 RUN apk add --no-cache bash git

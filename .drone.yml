@@ -17,6 +17,8 @@ pipeline:
     storage_driver: vfs
     repo: omelhoro1/devshop
     secrets: [ docker_username, docker_password ]
+    args:
+      - DOCKER_USERNAME="$${DOCKER_USERNAME}"
     args-from-env:
       - docker_username
     build-args-from-env:

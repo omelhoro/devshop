@@ -105,19 +105,19 @@ const ACTION_HANDLERS = {
 	},
 	[actions.UPDATEPAGESIZE]: (state, action) => ({ ...state, pageSize: action.payload }),
 	[actions.SETDEVLIST]: (state, action) => {
-		const developers = _.uniqBy(state.developers.concat(action.devs), e => e.login);
+		const developers = _.uniqBy(state.developers.concat(action.devs), (e) => e.login);
 		const pages = Math.ceil(developers.length / state.devsOnPage);
 		const developersPaged = _.chunk(developers, state.devsOnPage);
 		return ({ ...state, developers, pages, developersPaged });
 	},
 	[actions.REMOVEFROMCARD]: (state: IShoppingState, action) => {
-		const ixRemove = _.findIndex(state.shoppingCart, e => e.login === action.item.login);
+		const ixRemove = _.findIndex(state.shoppingCart, (e) => e.login === action.item.login);
 		const shoppingCart = [
 			...state.shoppingCart.slice(0, ixRemove),
 			...state.shoppingCart.slice(ixRemove + 1),
 		];
 
-		const ixIsInCard = _.findIndex(state.developers, e => e.login === action.item.login);
+		const ixIsInCard = _.findIndex(state.developers, (e) => e.login === action.item.login);
 		const developers = [
 			...state.developers.slice(0, ixIsInCard),
 			{ ...state.developers[ixIsInCard], isInCard: false },

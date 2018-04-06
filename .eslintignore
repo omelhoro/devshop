@@ -3,6 +3,8 @@ node_modules/*
 /**/out/*
 /**/dist/*
 /**/node_modules-docker/*
+backend/
+frontend-react/
 
 # there we're using tslint
 frontend-ng5

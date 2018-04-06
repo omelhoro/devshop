@@ -13,7 +13,7 @@ import ConfirmModal from './dev-shopping-page-components/confirm-modal';
 interface IReducerState {
 	developers: IDeveloper[],
 	developersInCart: IDeveloper[],
-	resultsLoading: boolean,
+	resultsLoading: { orgLoading: boolean, devLoading: boolean },
 	currentPage: number,
 	coupon: string,
 	token: string,
@@ -60,8 +60,8 @@ const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
 	path: () => ['scenes', 'shopping-page'],
 
 	actions: () => ({
-		findDeveloperByName: name => ({ name }),
-		findDeveloperByOrgName: name => ({ name }),
+		findDeveloperByName: (name) => ({ name }),
+		findDeveloperByOrgName: (name) => ({ name }),
 		addDevelopersToList: (dev: IDeveloper | IDeveloper[]) => ({ dev }),
 		addDevelopersToCart: (dev: IDeveloper) => ({ dev: { ...dev, addedToCart: new Date() } }),
 		changeDevHours: (developer: IDeveloper, hours) => ({ developer, hours }),
@@ -69,9 +69,9 @@ const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
 		changePage: (page: number) => ({ page }),
 		onCouponChange: (coupon: string) => ({ coupon }),
 		submitOrder: (cart, coupon, email) => ({ cart, coupon, email }),
-		setToken: token => ({ token }),
+		setToken: (token) => ({ token }),
 		resetCart: () => (0),
-		onAjaxError: errorMsg => ({ errorMsg }),
+		onAjaxError: (errorMsg) => ({ errorMsg }),
 	}),
 
 	reducers: ({ actions }) => ({
@@ -82,7 +82,7 @@ const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
 					_.uniqBy([].concat(payload.dev).concat(state), 'login'),
 
 			[actions.changeDevHours]: (state, { developer, hours }) => {
-				const index = state.findIndex(item => item.login === developer.login);
+				const index = state.findIndex((item) => item.login === developer.login);
 				const newDev = {
 					...developer,
 					appAdded: {
@@ -96,46 +96,29 @@ const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
 			},
 		}],
 		token: ['', PropTypes.string, {
-
 			[actions.setToken]: (state, payload) => payload.token,
-
 			[actions.resetCart]: (state, payload) => '',
-
 		}],
 		coupon: ['', PropTypes.string, {
-
 			[actions.onCouponChange]: (state, { coupon }) => coupon,
-
 			[actions.resetCart]: (state, payload) => '',
-
 		}],
 		currentPage: [0, PropTypes.number, {
-
 			[actions.changePage]: (state, { page }) => page,
-
 		}],
 		developersInCart: [[], PropTypes.array, {
-
 			[actions.removeFromCart]: (state, { developer }) =>
-				state.filter(elem => elem.login !== developer.login),
-
+				state.filter((elem) => elem.login !== developer.login),
 			[actions.resetCart]: (state, payload) => [],
-
 			[actions.addDevelopersToCart]:
 				(state, payload) =>
 					_.uniqBy(state.concat(payload.dev), 'login'),
-
 		}],
-		resultsLoading: [false, PropTypes.boolean, {
-
-			[actions.addDevelopersToList]: () => false,
-
-			[actions.findDeveloperByName]: () => true,
-
-			[actions.findDeveloperByOrgName]: () => true,
-
-			[actions.onAjaxError]: () => false,
-
+		resultsLoading: [{ orgLoading: false, devLoading: false }, PropTypes.object, {
+			[actions.addDevelopersToList]: (state) => ({ ...state, orgLoading: false, devLoading: false }),
+			[actions.findDeveloperByName]: (state) => ({ ...state, devLoading: true }),
+			[actions.findDeveloperByOrgName]: (state) => ({ ...state, orgLoading: true }),
+			[actions.onAjaxError]: (state) => ({ ...state, orgLoading: false, devLoading: false }),
 		}],
 	}),
 
@@ -170,9 +153,9 @@ const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
 	}),
 
 	takeLatest: ({ actions, workers }) => ({
-		[actions.findDeveloperByName]: action => workers.findDeveloperByName(action),
-		[actions.findDeveloperByOrgName]: action => workers.findDeveloperByOrgName(action),
-		[actions.submitOrder]: action => workers.submitOrder(action),
+		[actions.findDeveloperByName]: (action) => workers.findDeveloperByName(action),
+		[actions.findDeveloperByOrgName]: (action) => workers.findDeveloperByOrgName(action),
+		[actions.submitOrder]: (action) => workers.submitOrder(action),
 	}),
 
 	workers: {
@@ -241,7 +224,8 @@ export const Pagination = ({ pages, currentPage, onPageChange }) => (
 			</li>
 		))}
 		<li className="page-item">
-			<div aria-label="Next" className="page-link" onClick={() => currentPage < (pages - 1) ? onPageChange(currentPage + 1) : 0}>
+			<div aria-label="Next"
+				className="page-link" onClick={() => currentPage < (pages - 1) ? onPageChange(currentPage + 1) : 0}>
 				<span aria-hidden="true">&raquo;</span>
 			</div>
 		</li>
@@ -249,7 +233,6 @@ export const Pagination = ({ pages, currentPage, onPageChange }) => (
 );
 
 /* eslint-enable */
-
 
 type IDevShoppingPageProps =
 	IReducerState &
@@ -259,6 +242,10 @@ export class DevShoppingPage extends React.Component<IDevShoppingPageProps, any>
 
 	actions: IActions;
 
+	componentWillUnmount() {
+		this.actions.resetCart();
+	}
+
 	render() {
 
 		return (
@@ -267,7 +254,7 @@ export class DevShoppingPage extends React.Component<IDevShoppingPageProps, any>
 					token={this.props.token}
 					cartSum={this.props.cartSum}
 					resetCart={() => this.actions.resetCart()}
-					submitOrder={email =>
+					submitOrder={(email) =>
 						this.actions.submitOrder(
 							this.props.developersInCart,
 							this.props.coupon, email
@@ -280,8 +267,8 @@ export class DevShoppingPage extends React.Component<IDevShoppingPageProps, any>
 				}}
 				>
 					<SearchPanel
-						addDevFromName={name => this.actions.findDeveloperByName(name)}
-						addDevFromOrgName={name => this.actions.findDeveloperByOrgName(name)}
+						addDevFromName={(name) => this.actions.findDeveloperByName(name)}
+						addDevFromOrgName={(name) => this.actions.findDeveloperByOrgName(name)}
 						developers={this.props.developers}
 						resultsLoading={this.props.resultsLoading}
 					/>

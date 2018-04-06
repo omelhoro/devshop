@@ -1,9 +1,12 @@
 
+import 'isomorphic-fetch';
+
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { getMembersOfOrg, getDeveloper } from './api/githubApi';
-import { processOrder, getOrder } from './api/processOrder';
+import GithubRoute from './api/github-route';
+import OrdersRoute from './api/orders-route';
+import registerAPINamespace, { registerMiddlewareErrorHandling } from './api/utils/register-class-api-namespace';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 
@@ -12,32 +15,25 @@ const app = express();
 app.use(bodyParser.json());
 
 if (isDeveloping) {
-	const cors = require('cors');
-	app.use(cors());
+	app.use(require('cors')());
 }
 
-app.get('/api/members', getMembersOfOrg);
-app.get('/api/developer', getDeveloper);
-app.post('/api/order', processOrder);
-app.get('/api/order', getOrder);
+registerAPINamespace('github', GithubRoute, app);
+registerAPINamespace('orders', OrdersRoute, app);
+registerMiddlewareErrorHandling(app);
 
-if (isDeveloping) {
-	console.log('In dev mode this backend is only an API, it\'s not serving html.');
-} else {
-	app.use(express.static(path.join(__dirname, './www')));
-	app.get('/ng/*', (req, res) => {
-		res.sendFile(path.join(__dirname, './www/ng/index.html'));
-	});
-	app.get('/react/*', (req, res) => {
-		res.sendFile(path.join(__dirname, './www/react/index.html'));
-	});
-
-}
+app.use(express.static(path.join(__dirname, './www')));
+app.get('/ng/*', (req, res) => {
+	res.sendFile(path.join(__dirname, './www/ng/index.html'));
+});
+app.get('/react/*', (req, res) => {
+	res.sendFile(path.join(__dirname, './www/react/index.html'));
+});
 
 const port = 10001;
 const host = '0.0.0.0';
 
-app.listen(10001, host, (err) => {
+app.listen(port, host, (err) => {
 	if (err) {
 		console.log(err);
 	}

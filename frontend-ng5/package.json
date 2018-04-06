@@ -34,6 +34,7 @@
     "clean:dist": "npm run rimraf -- dist",
     "clean:install": "npm set progress=false && npm install",
     "clean": "npm cache clean --force && npm run rimraf -- node_modules doc coverage dist compiled dll",
+    "dev": "BACKEND_ENDPOINT=http://localhost:10001 npm run server:dev:hmr",
     "docker": "docker",
     "docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./src/",
     "docs:compodoc": "compodoc -p tsconfig.json",

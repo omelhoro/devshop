@@ -41,7 +41,6 @@ export function changeStage(stage) {
 	};
 }
 
-
 export function calculatePrice(obj, e) {
 	const value = parseInt(e.target.value, 10);
 	return {
@@ -79,7 +78,6 @@ export function addHistoryUser(e) {
 	};
 }
 
-
 export function setLoadingState(loading) {
 	return {
 		type: actionConstants.LOADINGSTATE,
@@ -97,14 +95,14 @@ export function addDevFromName(dev) {
 
 	return async (dispatch) => {
 		dispatch(setLoadingState(true));
-		const out = await fetch(`${BACKEND_ENDPOINT}/api/developer?name=${dev}`);
+		const out = await fetch(`${BACKEND_ENDPOINT}/api/github/developer?name=${dev}`);
 		dispatch(setLoadingState(false));
 		switch (out.status) {
 			case 200: {
 				const outJson = await out.json();
 				dispatch(addToDevList(outJson));
-			}
 				break;
+			}
 			case 404:
 				alert(`No such developer: ${dev}`);
 				return;
@@ -137,7 +135,7 @@ export function changePage(page) {
 
 export function loadStateFromToken(token) {
 	return async (dispatch) => {
-		const out = await fetch(`${BACKEND_ENDPOINT}/api/order?token=${token}`);
+		const out = await fetch(`${BACKEND_ENDPOINT}/api/orders/${token}`);
 		const outJson = await out.json();
 		dispatch(loadState(outJson));
 	};
@@ -161,7 +159,7 @@ export function sendOrder(email) {
 			body: JSON.stringify(state),
 		};
 
-		const out = await fetch(`${BACKEND_ENDPOINT}/api/order`, request);
+		const out = await fetch(`${BACKEND_ENDPOINT}/api/orders`, request);
 		const outJson = await out.json();
 		dispatch(setToken(outJson.token));
 	};
@@ -177,14 +175,14 @@ export function addDevFromOrg(org) {
 
 	return async (dispatch) => {
 		dispatch(setLoadingState(true));
-		const out = await fetch(`${BACKEND_ENDPOINT}/api/members?orgName=${org}`);
+		const out = await fetch(`${BACKEND_ENDPOINT}/api/github/members-of-org?orgName=${org}`);
 		dispatch(setLoadingState(false));
 		switch (out.status) {
 			case 200: {
 				const outJson = await out.json();
 				dispatch(addToDevList(outJson));
-			}
 				break;
+			}
 			case 404:
 				alert(`No such organisation: ${org}`);
 				return;

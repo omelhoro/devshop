@@ -1,7 +1,8 @@
 import * as urlJoin from 'url-join';
-import { mailgun as mailgunCreds } from '../vault/secret/credentials';
+import * as _mailgun from 'mailgun-js';
+import { mailgun as mailgunCreds } from '../../vault/secret/credentials';
 
-const mailgun = require('mailgun-js')({ apiKey: mailgunCreds.apiKey, domain: mailgunCreds.domain });
+const mailgun = _mailgun({ apiKey: mailgunCreds.apiKey, domain: mailgunCreds.domain });
 
 export function sendToken({ to, token, host }, callback) {
 	const url = urlJoin(host, 'show-order', `?token=${token}`);

@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-export const getValue = elem => document
+export const getValue = (elem) => document
 	.querySelector(elem)
 	.value;
 
 interface ISearchPanelProps {
 	addDevFromName(name: string): void,
 	developers: any[],
-	resultsLoading: boolean;
+	resultsLoading: { orgLoading: boolean, devLoading: boolean };
 	addDevFromOrgName(name: string): void,
 }
 
@@ -55,7 +55,7 @@ export default class SearchPanel extends React.Component<ISearchPanelProps, any>
 											minWidth: '110px',
 										}}
 									>
-										{this.props.resultsLoading ? (
+										{this.props.resultsLoading.devLoading ? (
 											<i className="fa fa-spinner fa-spin" style={{ padding: '4px' }}>
 											</i>
 										) :
@@ -103,7 +103,7 @@ export default class SearchPanel extends React.Component<ISearchPanelProps, any>
 											minWidth: '110px',
 										}}
 									>
-										{this.props.resultsLoading ? (
+										{this.props.resultsLoading.orgLoading ? (
 											<i className="fa fa-spinner fa-spin" style={{ padding: '4px' }}>
 											</i>
 										) :

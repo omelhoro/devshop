@@ -1,7 +1,6 @@
-import * as Bluebird from 'bluebird';
-import * as GitHubApi from 'github';
-import { errorHandler, calculateHoursPrice } from './utils/utils';
-import { github as githubCreds } from '../vault/secret/credentials';
+import * as GitHubApi from '@octokit/rest';
+import { errorHandler, calculateHoursPrice } from '../utils/utils';
+import { github as githubCreds } from '../../vault/secret/credentials';
 
 const github = new GitHubApi({
 	// required
@@ -23,12 +22,13 @@ github.authenticate({
 });
 
 async function getSingleUser({ login }) {
-	const out = await Bluebird.promisify(github.users.getForUser)({ username: login });
+	const out = await github.users.getForUser({ username: login });
 	const user = out.data;
 	return { ...user, appAdded: { price: calculateHoursPrice(user), orderedHours: 0 } };
 }
 
-export default class GithubRoute {
+export default class Route {
+	static entityName = 'github';
 
 	static async getMembersOfOrg(req, res) {
 		const name = req.query.orgName;
@@ -37,7 +37,7 @@ export default class GithubRoute {
 			return;
 		}
 
-		const out = await Bluebird.promisify(github.orgs.getMembers)({ org: name });
+		const out = await github.orgs.getMembers({ org: name });
 		const enrichedData = await Promise.all(out.data.map(getSingleUser));
 		return enrichedData;
 	}

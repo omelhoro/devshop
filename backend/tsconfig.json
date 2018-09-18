@@ -3,7 +3,7 @@
     "baseUrl": "./",
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es6",
     "sourceMap": true,
     "skipDefaultLibCheck": true,
     "strict": false,
@@ -12,6 +12,8 @@
     "types": ["node"],
     "lib": [
       "es6",
+      "es2017.object",
+      "es2017.string"
     ]
   },
   "include": [

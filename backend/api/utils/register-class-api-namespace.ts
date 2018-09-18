@@ -1,8 +1,8 @@
-import * as _ from 'lodash';
-import * as _debug from 'debug';
 import 'colors';
+import { kebabCase } from 'lodash';
 
-const debug = _debug('app:routes');
+// tslint:disable-next-line
+const debug = require('debug')('app:routes');
 
 const stackFilter = new Set([
 	'at Generator.next (<anonymous>)',
@@ -17,74 +17,87 @@ export const errorHandler = (res, stage, method, route) => (err) => {
 	const enumKey = err.enumKey || 'UNKNOWN_ERROR';
 	const stack = err.stack.split('\n').slice(0, 5).filter((line) => !stackFilter.has(line.trim())).join('\n');
 	// tslint:disable-next-line
-	console.error(`  ${stage} =`.red, enumKey.underline, method.toUpperCase(), route.green, '\n', ' STACK ='.yellow, stack.grey);
+	debug(`  ${stage} =`.red, enumKey.underline, method.toUpperCase(), route.green, '\n', ' STACK ='.yellow, stack.grey);
 	res.status(err.status || 500).json({ message, enumKey });
 };
 
 export function registerMiddlewareErrorHandling(appRef) {
-	appRef.use((err, req, res, next) => errorHandler(res, 'MIDDLEWARE-ERROR', '', '')(err));
+	appRef.use((err, _req, res, _next) => errorHandler(res, 'MIDDLEWARE-ERROR', '', '')(err));
 }
 
-export default function registerAPINamespace(namespace, nsobj, appRef) {
+export function registerApiRoutes(routes, app) {
+	Object.entries(routes)
+		.filter(([routeName]) => routeName.endsWith('Route'))
+		.forEach(([, route]) => registerApiNamespace(route, app));
+}
+
+export default function registerApiNamespace(nsobj, appRef) {
+	const namespace = nsobj.entityName;
 	debug(`Registering namespace '${namespace}':`);
 	const functions = Object.getOwnPropertyNames(nsobj)
 		.filter((prop) => typeof nsobj[prop] === 'function');
 
-	return functions.forEach((fnname: any) => {
+	return functions
+		.forEach((funcName) => {
 
-		const func = nsobj[fnname];
-		let method = '';
-		switch (true) {
-			case fnname.startsWith('get'):
-				method = 'get';
-				break;
-			case fnname.startsWith('create'):
-			case fnname.startsWith('post'):
-				method = 'post';
-				break;
-			case fnname.startsWith('patch'):
-			case fnname.startsWith('put'):
-				method = 'put';
-				break;
-			case fnname.startsWith('remove'):
-			case fnname.startsWith('delete'):
-				method = 'delete';
-				break;
-			default:
-				debug('registering default route =', fnname);
-				method = 'use';
-				break;
-		}
+			const func = nsobj[funcName];
+			let method = '';
+			switch (true) {
+				case funcName.startsWith('get'):
+					method = 'get';
+					break;
+				case funcName.startsWith('save'):
+				case funcName.startsWith('create'):
+				case funcName.startsWith('post'):
+					method = 'post';
+					break;
+				case funcName.startsWith('update'):
+				case funcName.startsWith('patch'):
+				case funcName.startsWith('put'):
+					method = 'put';
+					break;
+				case funcName.startsWith('remove'):
+				case funcName.startsWith('delete'):
+					method = 'delete';
+					break;
+				default:
+					debug('registering default route =', funcName);
+					method = 'use';
+					break;
+			}
 
-		const methodRegEx = /^(get|create|post|patch|put|remove|delete)/;
+			const methodRegEx = /^(get|create|save|post|patch|update|put|remove|delete)/;
 
-		// replace REST method, rename method to kebac case - getUserImage -> user-image
-		const fnEndpoint = _.kebabCase(fnname.replace(methodRegEx, ''));
+			// replace REST method, rename method to kebac case - getUserImage -> user-image
+			const fnEndpoint = kebabCase(funcName.replace(methodRegEx, ''));
 
-		// get middleware of the function and filter for undefined
-		const middleware = (func.md || []).filter((fun) => typeof fun === 'function');
-		const middlewareNames = middleware.map((middlewareFunc) => middlewareFunc.name).join('->');
-		let route = '/api';
-		if ([fnEndpoint, `${fnEndpoint}s`].indexOf(namespace) >= 0) {
-			route += `/${namespace}`;
-		} else if (fnEndpoint === 'by-id') {
-			route += `/${namespace}/:id`;
-		} else if (fnEndpoint.indexOf('-by-id') >= 0) {
-			route += `/${namespace}/:id/${fnEndpoint.replace('-by-id', '')}`;
-		} else {
-			route += `/${namespace}/${fnEndpoint}`;
-		}
+			// get middleware of the function and filter for undefined
+			const middleware = (func.md || []).filter((fun) => typeof fun === 'function');
+			const middlewareNames = middleware.map((middlewareFunc) => middlewareFunc.name).join('->');
+			let route = '/api';
+			if ([fnEndpoint, `${fnEndpoint}s`].indexOf(namespace) >= 0) {
+				route += `/${namespace}`;
+			} else if (fnEndpoint === 'by-id') {
+				route += `/${namespace}/:id`;
+			} else if (fnEndpoint.indexOf('-by-id') >= 0) {
+				route += `/${namespace}/:id/${fnEndpoint.replace('-by-id', '')}`;
+			} else {
+				route += `/${namespace}/${fnEndpoint}`;
+			}
 
-		// tslint:disable-next-line:max-line-length
-		debug(`${(method.toLocaleUpperCase() as any).padEnd(4)} = ${(route as any).padEnd(25, '_')} {fn: ${(fnname.slice(0, 14)).padEnd(14)} Middleware: ${middlewareNames || '<none>'}}`); // eslint-disable-line
+			// strip trailing slash
+			route = route.replace(/\/$/, '');
 
-		appRef[method](route, ...middleware, (...args) => {
-			const res = args[1];
-			nsobj[fnname](...args)
-				.then((result) => res.json(result))
-				.catch(errorHandler(res, 'ENDPOINT-ERROR', method, route));
+			// tslint:disable-next-line:max-line-length
+			debug(`${method.toLocaleUpperCase().padEnd(4).green} ${route.padEnd(25, '_')} {fn: ${(funcName.slice(0, 14)).padEnd(14)} MD: ${middlewareNames || '<none>'}}`); // eslint-disable-line
+
+			appRef[method](route, ...middleware, (...args) => {
+				const res = args[1];
+				nsobj[funcName](...args)
+					.then((result) => res.json(result))
+					.catch(errorHandler(res, 'ENDPOINT-ERROR', method, route));
+			});
+
 		});
-
-	});
 
 }

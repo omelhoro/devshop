@@ -1,16 +1,16 @@
 import * as uuid from 'node-uuid';
-import * as Bluebird from 'bluebird';
 import * as levelup from 'levelup';
-import leveldown from 'leveldown';
+import * as leveldown from 'leveldown';
 
-import { errorHandler } from './utils/utils';
-import { sendToken } from './utils/emailService';
+import { errorHandler } from '../utils/utils';
+import { sendToken } from '../utils/send-email';
 
-const db = Bluebird.promisifyAll(levelup(leveldown(process.env.DB_PATH || './db')));
+const db: levelup.LevelUp = (levelup as any)((leveldown as any)(process.env.DB_PATH || './db'));
 
-export default class OrderRoute {
+export default class Route {
+	static entityName = 'orders';
 
-	static async postOrder(req, res) {
+	static async postOrder(req) {
 		const token = uuid.v1();
 
 		// TODO: we need a more secure way to verify the price than thrust in the client
@@ -27,7 +27,7 @@ export default class OrderRoute {
 			sum = sumWithoutCoupon;
 		}
 
-		await db.putAsync(token, JSON.stringify({
+		await db.put(token, JSON.stringify({
 			...req.body, sum, token, timestamp: new Date().toJSON(),
 		}));
 		const matchHost = /^https?:\/\/.*\//;
@@ -50,7 +50,7 @@ export default class OrderRoute {
 			return errorHandler(res, 401, 'NO_TOKEN_SUPPLIED');
 		}
 		try {
-			const value = await db.getAsync(req.params.id);
+			const value = await db.get(req.params.id);
 			return JSON.parse(value || '{}');
 		} catch (error) {
 			return errorHandler(res, 401, 'TOKEN_INVALID');

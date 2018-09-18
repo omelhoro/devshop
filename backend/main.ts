@@ -1,12 +1,9 @@
-
 import 'isomorphic-fetch';
-
 import * as path from 'path';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import GithubRoute from './api/github-route';
-import OrdersRoute from './api/orders-route';
-import registerAPINamespace, { registerMiddlewareErrorHandling } from './api/utils/register-class-api-namespace';
+import * as routes from './api/routes';
+import { registerApiRoutes, registerMiddlewareErrorHandling } from './api/utils/register-class-api-namespace';
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 
@@ -19,16 +16,18 @@ if (isDeveloping) {
 	app.use(require('cors')());
 }
 
-registerAPINamespace('github', GithubRoute, app);
-registerAPINamespace('orders', OrdersRoute, app);
+registerApiRoutes(routes, app);
 registerMiddlewareErrorHandling(app);
 
 app.use(express.static(path.join(__dirname, './www')));
-app.get('/ng/*', (req, res) => {
+app.get('/ng/*', (_req, res) => {
 	res.sendFile(path.join(__dirname, './www/ng/index.html'));
 });
-app.get('/react/*', (req, res) => {
-	res.sendFile(path.join(__dirname, './www/react/index.html'));
+app.get('/react-kea/*', (_req, res) => {
+	res.sendFile(path.join(__dirname, './www/react-kea/index.html'));
+});
+app.get('/react-context/*', (_req, res) => {
+	res.sendFile(path.join(__dirname, './www/react-context/index.html'));
 });
 
 const port = 10001;

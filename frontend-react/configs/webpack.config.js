@@ -174,7 +174,7 @@ module.exports = (env = {}) => {
 			new HtmlWebpackPlugin({
 				template: './index.html',
 				metadata: {
-					baseUrl: isDev ? '/' : '/react',
+					baseUrl: isDev ? '/' : '/react-kea',
 				},
 			}),
 			...(isDev ? [

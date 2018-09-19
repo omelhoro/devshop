@@ -1,24 +1,28 @@
 # React / Redux / Typescript / Webpack - Starter
+
 ## _Powered by Webpack optimized for performance_
 
 ### Recently updated all dependencies!
 
 ## Features:
-- No babel!  
-- Ultra performance  
-- Webpack 2 (simple one-file config, separate vendor bundle, dashboard)  
-- Setup for `ts-loader` and `awesome-typescript-loader` for comparison (check `npm run dev` or `npm run dev:awesome`)  
+
+- No babel!
+- Ultra performance
+- Webpack 2 (simple one-file config, separate vendor bundle, dashboard)
+- Setup for `ts-loader` and `awesome-typescript-loader` for comparison (check `npm run dev` or `npm run dev:awesome`)
 
 - React Hot Loader  
-![](https://raw.githubusercontent.com/piotrwitek/react-redux-typescript-webpack-starter/docs/images/dev.gif)
+  ![](https://raw.githubusercontent.com/piotrwitek/react-redux-typescript-webpack-starter/docs/images/dev.gif)
 
-- Dependency graph of the entire application! 🌟 __NEW__  
-![](./frontend-react/dependencygraph-develop.png)
+- Dependency graph of the entire application! 🌟 **NEW**  
+  ![](./frontend-react/dependencygraph-develop.png)
 
 ---
 
 ## Installation
+
 - project optimized to use yarn
+
 ```
 // Clone repo
 git clone https://github.com/piotrwitek/react-redux-typescript-webpack-starter
@@ -76,4 +80,22 @@ npm run dev (ts-loader)
 
 ## The MIT License (MIT)
 
-Copyright (c) 2016 Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io/)
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

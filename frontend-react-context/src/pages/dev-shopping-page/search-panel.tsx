@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { Fetch } from 'react-request';
 import Composer from 'react-composer';
-import urlJoin from 'url-join';
 import qS from 'query-string';
-import { BACKEND_ENDPOINT } from '../../utils/vars';
+import url from '../../utils/url';
 
 export const getValue = (elem) => document
 	.querySelector(elem)
@@ -11,11 +10,11 @@ export const getValue = (elem) => document
 
 export default ({ onDevResult }) => (
 	<Composer components={[
-		<Fetch lazy url={urlJoin(BACKEND_ENDPOINT, 'api/github/developer')}
+		<Fetch lazy url={url('github/developer')}
 			afterFetch={({ data }) => onDevResult(data)}
 		/>,
 		<Fetch lazy
-			url={urlJoin(BACKEND_ENDPOINT, 'api/github/members-of-org?orgName=')}
+			url={url('github/members-of-org')}
 			afterFetch={({ data }) => onDevResult(data)}
 		/>,
 	]}>

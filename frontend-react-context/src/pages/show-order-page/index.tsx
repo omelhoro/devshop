@@ -1,6 +1,5 @@
 import * as React from 'react';
-import urlJoin from 'url-join';
-import * as vars from '../../utils/vars';
+import url from '../../utils/url';
 import qS from 'query-string';
 import * as moment from 'moment';
 import OrderElement from './order-element';
@@ -8,7 +7,7 @@ import { Fetch } from 'react-request';
 
 export default () => (
 	<Fetch
-		url={urlJoin(vars.BACKEND_ENDPOINT, '/api/orders', qS.parse(location.search).token)}>
+		url={url('orders', qS.parse(location.search).token)}>
 		{({ data: order }) => {
 			if (!order) { return <div>Loading</div>; }
 			return (

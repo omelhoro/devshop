@@ -30,7 +30,7 @@ COPY ./frontend-ng5 /app
 RUN source vars-prod.sh; npm run build:prod
 
 
-FROM node:alpine
+FROM node:slim
 WORKDIR /app
 COPY ./backend/package-lock.json /app
 COPY ./backend/package.json /app

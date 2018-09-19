@@ -51,7 +51,7 @@ module.exports = (env = {}) => {
 		output: {
 			path: PATHS.dist,
 			filename: isDev ? '[name].js' : '[name].[hash].js',
-			publicPath: isDev ? '/' : '/react',
+			publicPath: isDev ? '/' : '/react-kea',
 			// chunkFilename: '[id].chunk.js',
 		},
 

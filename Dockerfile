@@ -1,5 +1,6 @@
 FROM node:alpine as frontend-react-kea-builder
 WORKDIR /app
+RUN apk add --no-cache bash git
 COPY ./frontend-react/package.json /app
 COPY ./frontend-react/package-lock.json /app
 ENV NODE_ENV production
@@ -10,6 +11,7 @@ RUN source vars-prod.sh; npm run build:prod
 
 FROM node:alpine as frontend-react-context-builder
 WORKDIR /app
+RUN apk add --no-cache bash git
 COPY ./frontend-react-context/package.json /app
 COPY ./frontend-react-context/package-lock.json /app
 ENV NODE_ENV production

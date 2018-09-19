@@ -1,0 +1,6 @@
+FROM node:alpine
+RUN apk add --no-cache bash
+WORKDIR /app
+SHELL ["/bin/bash", "-c"]
+CMD source vars-dev.sh; npm run dev
+EXPOSE 8080

@@ -64,7 +64,7 @@ module.exports = (env = {}) => {
         // typescript
         // { test: /\.tsx?$/, include: /src/, use: 'awesome-typescript-loader?silent=true' },
         {
-          // test: /(?<!\.(stories|spec))\.tsx?$/,
+          test: /\.tsx?$/,
           // test: modulePath => {
           //   const check = /(?<!\.(stories|spec))\.tsx?$/.test(modulePath);
           //   console.log(modulePath, check);

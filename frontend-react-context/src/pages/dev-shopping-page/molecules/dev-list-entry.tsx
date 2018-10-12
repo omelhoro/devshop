@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import DevImage from './atoms/dev-image';
 export default ({
 	element, addDevelopersToCart, onHoursChange, isInCart, removeFromCart,
 }) => {
@@ -16,15 +16,9 @@ export default ({
 			<div className="media">
 				<div className="media-left media-top">
 					<div>
-						<img
+						<DevImage
 							src={element.avatar_url}
 							alt={element.login}
-							style={{
-								maxWidth: 160,
-								boxShadow: '4px 3px 3px black',
-								margin: '20px',
-								border: '1px solid grey',
-							}}
 						/>
 					</div>
 				</div>
@@ -92,4 +86,4 @@ export default ({
 			</div>
 		</div>
 	);
-}
+};

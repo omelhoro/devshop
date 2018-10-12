@@ -3,12 +3,8 @@ import * as _ from 'lodash';
 
 export default ({ pages, currentPage, onPageChange }) => (
 	<ul
-		className="pagination justify-content-center"
+		className="pagination"
 		hidden={!pages}
-		style={{
-			margin: '0 auto',
-			marginBottom: 10,
-		}}
 	>
 		<li className="page-item">
 			<div className="page-link" aria-label="Previous" onClick={() => currentPage > 0 ? onPageChange(currentPage - 1) : 0}>

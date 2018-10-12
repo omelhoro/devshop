@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 export const initialState = {
 	developersInCart: [],
 	developers: [],
@@ -14,19 +16,11 @@ export function actions(c: { state: IInitialState }, setState: ISetState) {
 	return {
 		changeDevHours: (entity, hours) => {
 			const ix = c.state.developers.findIndex((_p) => entity.id === _p.id);
-			const newEntity = {
-				...c.state.developers[ix], appAdded: {
-					...c.state.developers[ix].appAdded,
-					orderedHours: hours,
-					totalSum: hours * entity.appAdded.price
-				}
-			};
-			setState({
-				developers: [
-					...c.state.developers.slice(0, ix),
-					newEntity,
-					...c.state.developers.slice(ix + 1)]
-			});
+			const developers = produce(c.state.developers, (draft) => {
+				draft[ix].appAdded.orderedHours = hours;
+				draft[ix].appAdded.totalSum = hours * c.state.developers[ix].appAdded.price;
+		 	});
+			setState({developers});
 		},
 		setToken: (token) => setState({ token }),
 		addDevToCart: (a) => setState({

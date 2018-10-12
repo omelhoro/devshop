@@ -1,1 +1,1 @@
-export const BACKEND_ENDPOINT = process.env.BACKEND_ENDPOINT;
+export const BACKEND_ENDPOINT = process.env.BACKEND_ENDPOINT || '';

@@ -10,14 +10,7 @@
     "strict": false,
     "noUnusedLocals": true,
     "outDir": "out/",
-    "lib": [
-      "es6",
-      "dom"
-    ]
+    "lib": ["es6", "dom"]
   },
-  "exclude": [
-    "bin",
-    "node_modules",
-    "**/*.spec.tsx"
-  ]
+  "exclude": ["bin", "node_modules", "**/*.spec.tsx", "**/*.stories.tsx"]
 }

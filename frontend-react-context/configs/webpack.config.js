@@ -64,10 +64,15 @@ module.exports = (env = {}) => {
         // typescript
         // { test: /\.tsx?$/, include: /src/, use: 'awesome-typescript-loader?silent=true' },
         {
-          test: /\.tsx?$/,
+          // test: /(?<!\.(stories|spec))\.tsx?$/,
+          // test: modulePath => {
+          //   const check = /(?<!\.(stories|spec))\.tsx?$/.test(modulePath);
+          //   console.log(modulePath, check);
+          //   return check;
+          // },
           include: PATHS.src,
-          // include: /^(?!.*\.spec\.js$).*\.tsx?$/,
-          // exclude: /\.spec/,
+          // include: /(?<!\.(stories|spec))\.tsx?$/,
+          // exclude: /(\.spec|stories)/,
           use: env.awesome
             ? [
                 // { loader: 'react-hot-loader/webpack' },

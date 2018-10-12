@@ -10,7 +10,7 @@ export default () => (
 		<ConfirmModal />
 		<div className="col-sm-8">
 			<SearchPanel
-			/>)
+			/>
 		</div>
 
 		<div className="row">

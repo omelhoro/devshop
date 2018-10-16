@@ -13,7 +13,9 @@ export default ({
 				marginBottom: '20px',
 			}}
 		>
-			<div className="media">
+			<div className="media" style={{
+				flexWrap: 'wrap'
+			}}>
 				<div className="media-left media-top">
 					<div>
 						<DevImage

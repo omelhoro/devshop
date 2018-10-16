@@ -21,7 +21,7 @@ export default ({ loading, getDeveloper }) => (
 			>
 				<span
 					className="input-group-text"
-					style={{ minWidth: '150px' }}
+					style={{ minWidth: '85px' }}
 				>
 					By User
 				</span>

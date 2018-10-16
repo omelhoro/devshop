@@ -19,8 +19,8 @@ export default ({ loading, getOrganisation }) => (
 			<span
 				className="input-group-prepend"
 			>
-				<div className="input-group-text" style={{ minWidth: '150px' }}>
-					By Organization
+				<div className="input-group-text" style={{ minWidth: '85px' }}>
+					By Org
 				</div>
 			</span>
 			<input id="org-name" className="form-control" type="text" placeholder="e.g. Homebrew" />

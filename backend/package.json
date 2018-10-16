@@ -36,7 +36,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "source vars-dev.sh && nodemon --exec \"ts-node --typeCheck main.ts\" -e ts,sh ",
-    "start": "./vault/decrypt.sh && cp index.html www && ts-node --typeCheck main.ts"
+    "start": "./vault/decrypt.sh && ts-node main.ts"
   },
   "author": "",
   "license": "ISC"

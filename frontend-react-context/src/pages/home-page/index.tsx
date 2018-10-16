@@ -10,6 +10,7 @@ export default () => (
 				display: 'block',
 				border: '2px solid black',
 				boxShadow: '10px 5px 5px red',
+				maxWidth: '100%'
 			}}
 			src="http://i.imgur.com/8NPz67T.png"
 

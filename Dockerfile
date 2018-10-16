@@ -37,7 +37,6 @@ COPY ./backend/package.json /app
 ENV NODE_ENV production
 RUN npm i
 COPY ./backend /app
-RUN mkdir www
 COPY --from=frontend-react-kea-builder /app/dist ./www/react-kea
 COPY --from=frontend-react-context-builder /app/dist ./www/react-context
 COPY --from=frontend-ng-builder /app/dist ./www/ng

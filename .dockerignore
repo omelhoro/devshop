@@ -11,6 +11,5 @@ frontend-ng5/dist
 backend/node_modules
 backend/node_modules-docker
 backend/db
-backend/www
 
 .git*

@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const WriteFilePlugin = require("write-file-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const PATHS = {
   root: path.resolve(__dirname, ".."),
@@ -178,6 +179,7 @@ module.exports = (env = {}) => {
           NODE_ENV: JSON.stringify(isDev ? "development" : "development")
         }
       }),
+      new CopyWebpackPlugin([{ from: "static" }]),
       new HtmlWebpackPlugin({
         template: "./index.html",
         metadata: {

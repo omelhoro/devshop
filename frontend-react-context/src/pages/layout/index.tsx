@@ -7,8 +7,7 @@ export default ({ children }) =>
 		<div style={{
 			margin: '0px auto',
 			display: 'block',
-			width: '1024px',
-			paddingTop: '30px',
+			padding: '15px',
 		}}
 		>
 			{children}

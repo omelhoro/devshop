@@ -1,0 +1,15 @@
+{
+  "short_name": "Devshop",
+  "name": "A codechallenge resembling a developer shop powered by React & Angular",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "300x300"
+    }
+  ],
+  "display": "fullscreen",
+  "theme_color": "aliceblue",
+  "background_color": "#ffffff",
+  "start_url": "/"
+}

@@ -5,6 +5,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const WriteFilePlugin = require("write-file-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const PATHS = {
   root: path.resolve(__dirname, ".."),
@@ -159,14 +160,14 @@ module.exports = (env = {}) => {
       splitChunks: false,
       minimizer: isBuild
         ? [
-            new UglifyJsPlugin({
-              // beautify: false,
-              // compress: {
-              // 	screw_ie8: true,
-              // },
-              // comments: false,
-              // sourceMap: isSourceMap,
-            })
+            // new UglifyJsPlugin({
+            // beautify: false,
+            // compress: {
+            // 	screw_ie8: true,
+            // },
+            // comments: false,
+            // sourceMap: isSourceMap,
+            // })
           ]
         : []
     },
@@ -193,7 +194,14 @@ module.exports = (env = {}) => {
             }),
             new webpack.NamedModulesPlugin()
           ]
-        : []),
+        : [
+            new TerserPlugin({
+              parallel: true,
+              terserOptions: {
+                ecma: 6
+              }
+            })
+          ]),
       ...(isBuild
         ? [
             new webpack.LoaderOptionsPlugin({

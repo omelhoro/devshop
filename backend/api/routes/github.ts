@@ -12,19 +12,22 @@ const github = new GitHubApi({
 	// pathPrefix: '/api/v3', // for some GHEs; none for GitHub
 	timeout: 5000,
 	headers: {
-		'user-agent': 'My-Cool-GitHub-App', // GitHub is happy with a unique user agent
-	},
+		'user-agent': 'My-Cool-GitHub-App' // GitHub is happy with a unique user agent
+	}
 });
 
 github.authenticate({
 	type: 'oauth',
-	token: githubCreds.token,
+	token: githubCreds.token
 });
 
 async function getSingleUser({ login }) {
-	const out = await github.users.getForUser({ username: login });
+	const out = await github.users.getByUsername({ username: login });
 	const user = out.data;
-	return { ...user, appAdded: { price: calculateHoursPrice(user), orderedHours: 0 } };
+	return {
+		...user,
+		appAdded: { price: calculateHoursPrice(user), orderedHours: 0 }
+	};
 }
 
 export default class Route {
@@ -37,7 +40,7 @@ export default class Route {
 			return;
 		}
 
-		const out = await github.orgs.getMembers({ org: name });
+		const out = await github.orgs.listMembers({ org: name });
 		const enrichedData = await Promise.all(out.data.map(getSingleUser));
 		return enrichedData;
 	}

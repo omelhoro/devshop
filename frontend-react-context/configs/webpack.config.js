@@ -3,7 +3,6 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const WriteFilePlugin = require("write-file-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
@@ -158,18 +157,7 @@ module.exports = (env = {}) => {
     },
     optimization: {
       splitChunks: false,
-      minimizer: isBuild
-        ? [
-            // new UglifyJsPlugin({
-            // beautify: false,
-            // compress: {
-            // 	screw_ie8: true,
-            // },
-            // comments: false,
-            // sourceMap: isSourceMap,
-            // })
-          ]
-        : []
+      minimizer: isBuild ? [] : []
     },
     plugins: [
       new webpack.EnvironmentPlugin(["NODE_ENV", "BACKEND_ENDPOINT"]),

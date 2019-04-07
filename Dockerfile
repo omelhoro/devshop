@@ -31,7 +31,7 @@ RUN source vars-prod.sh; npm run build:prod
 # RUN source vars-prod.sh; npm run build:prod
 
 
-FROM node:alpine
+FROM node:slim
 WORKDIR /app
 COPY ./backend/package-lock.json /app
 COPY ./backend/package.json /app

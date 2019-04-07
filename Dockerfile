@@ -30,8 +30,8 @@ RUN source vars-prod.sh; npm run build:prod
 # COPY ./frontend-ng5 /app
 # RUN source vars-prod.sh; npm run build:prod
 
-
-FROM node:slim
+# because of leveldb we need to use the complete node image (slim & alpine don't have python)
+FROM node
 WORKDIR /app
 COPY ./backend/package-lock.json /app
 COPY ./backend/package.json /app

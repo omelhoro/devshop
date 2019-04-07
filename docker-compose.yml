@@ -1,6 +1,5 @@
-version: '2'
+version: "2"
 services:
-
   devshop:
     image: omelhoro1/devshop
     container_name: devshop
@@ -8,7 +7,8 @@ services:
     env_file:
       - /home/captain/vault/secrets
     labels:
-      - "traefik.frontend.rule=Host:devshop.software-unchained.com"
+      - traefik.frontend.rule=Host:devshop.fischerops.com,devshop.software-unchained.com
+      - traefik.enable=true
     volumes:
       - /tmp/db:/app/db
     networks:

@@ -8,6 +8,7 @@ RUN npm i
 COPY ./frontend-react /app
 RUN source vars-prod.sh; npm run build
 
+
 FROM node:alpine as frontend-react-context-builder
 WORKDIR /app
 RUN apk add --no-cache bash git

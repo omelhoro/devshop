@@ -1,6 +1,6 @@
 FROM node:alpine as frontend-react-kea-builder
 WORKDIR /app
-RUN apk add --no-cache bash git
+RUN apk add --no-cache bash git alpine-sdk python-dev
 COPY ./frontend-react/package.json /app
 COPY ./frontend-react/package-lock.json /app
 ENV NODE_ENV production

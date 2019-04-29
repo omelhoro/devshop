@@ -1,39 +1,34 @@
-import { routerReducer, routerMiddleware } from 'react-router-redux';
-import { getStore } from 'kea';
-import { createBrowserHistory } from 'history';
-import sagaPlugin from 'kea-saga';
-import { reducer as formReducer } from 'redux-form';
+import { getStore } from "kea";
+import { createBrowserHistory } from "history";
+import sagaPlugin from "kea-saga";
+import { reducer as formReducer } from "redux-form";
+import { connectRouter, routerMiddleware } from "connected-react-router";
 
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href')!;
+const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href")!;
 export const history = createBrowserHistory({ basename: baseUrl });
 
-if ((module as any).hot && localStorage.shouldSaveState) {
-	const initialStateLocalStorage =
-		localStorage.getItem('reduxState') ? JSON.parse(localStorage.getItem('reduxState')) : '';
-	if (initialStateLocalStorage) {
-		(window as any).initialReduxState = initialStateLocalStorage;
-	}
+const shouldSaveState = (module as any).hot && localStorage.shouldSaveState;
+let initialReduxState;
+if (shouldSaveState) {
+  initialReduxState = JSON.parse(localStorage.getItem("reduxState") || "{}");
 }
-const initialState = ((window as any).initialReduxState);
 
 const store = getStore({
-	middleware: [
-		routerMiddleware(history),
-	],
+  middleware: [routerMiddleware(history)],
 
-	preloadedState: initialState || undefined,
+  preloadedState: initialReduxState,
 
-	plugins: [sagaPlugin],
-	reducers: {
-		router: routerReducer,
-		form: formReducer,
-	},
+  plugins: [sagaPlugin],
+  reducers: {
+    router: connectRouter(history),
+    form: formReducer
+  }
 });
 
-if ((module as any).hot && localStorage.shouldSaveState) {
-	store.subscribe(() => {
-		localStorage.setItem('reduxState', JSON.stringify(store.getState()));
-	});
+if (shouldSaveState) {
+  store.subscribe(() => {
+    localStorage.setItem("reduxState", JSON.stringify(store.getState()));
+  });
 }
 
 export default store;

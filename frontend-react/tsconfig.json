@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "module": "es2015",
     "moduleResolution": "node",
     "target": "es5",
@@ -10,14 +10,10 @@
     "strict": false,
     "noUnusedLocals": true,
     "outDir": "out/",
-    "lib": [
-      "es6",
-      "dom"
-    ]
+    "paths": {
+      "~*": ["./*"]
+    },
+    "lib": ["es6", "dom"]
   },
-  "exclude": [
-    "bin",
-    "node_modules",
-    "**/*.spec.tsx"
-  ]
+  "exclude": ["bin", "node_modules", "**/*.spec.tsx"]
 }

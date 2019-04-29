@@ -5,7 +5,7 @@
   "main": ".eslintrc.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format:check": "prettier --check **/*.{tsx,ts,js,jsx,css,md,json} --ignore-path \"**/dist\"",
+    "format:check": "prettier --check **/*.{tsx,ts,js,jsx,css,md,json}",
     "format:fix": "prettier **/*.{tsx,ts,js,jsx,css,md,json} --write",
     "tslint:frontend": "tslint --project frontend-react",
     "tslint:backend": "tslint --project backend",

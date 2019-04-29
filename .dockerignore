@@ -1,9 +1,10 @@
 node_modules
 
+frontend-react-context/node_modules
+frontend-react-context/dist
+
 frontend-react/node_modules
 frontend-react/dist
-frontend-react/out
-frontend-react/old-src
 
 frontend-ng5/node_modules
 frontend-ng5/dist

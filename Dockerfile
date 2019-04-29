@@ -6,7 +6,7 @@ COPY ./frontend-react/package-lock.json /app
 ENV NODE_ENV production
 RUN npm i
 COPY ./frontend-react /app
-RUN source vars-prod.sh; npm run build:prod
+RUN source vars-prod.sh; npm run build
 
 
 FROM node:alpine as frontend-react-context-builder
@@ -31,7 +31,7 @@ RUN source vars-prod.sh; npm run build:prod
 # RUN source vars-prod.sh; npm run build:prod
 
 # because of leveldb we need to use the complete node image (slim & alpine don't have python)
-FROM node
+FROM node:10
 WORKDIR /app
 COPY ./backend/package-lock.json /app
 COPY ./backend/package.json /app

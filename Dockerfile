@@ -8,6 +8,7 @@ RUN npm i
 COPY ./frontend-react /app
 RUN source vars-prod.sh; npm run build
 
+
 FROM node:alpine as frontend-react-context-builder
 WORKDIR /app
 RUN apk add --no-cache bash git
@@ -29,11 +30,12 @@ RUN source vars-prod.sh; npm run build:prod
 # RUN source vars-prod.sh; npm run build:prod
 
 # because of leveldb we need to use the complete node image (slim & alpine don't have python)
-FROM node:alpine
+FROM node:10
 WORKDIR /app
-RUN apk add alpine-sdk python-dev
+
 COPY ./backend/package-lock.json /app
 COPY ./backend/package.json /app
+
 ENV NODE_ENV production
 RUN npm i
 COPY ./backend /app

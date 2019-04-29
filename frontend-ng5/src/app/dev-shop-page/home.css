@@ -1,15 +1,14 @@
 /*styles for home content only*/
-.card-container{
-    display: flex;
-    flex-direction: column;
-    /* margin: 15px; */
-
+.card-container {
+  display: flex;
+  flex-direction: column;
+  /* margin: 15px; */
 }
-.sample-content{
-    flex: 1;
+.sample-content {
+  flex: 1;
 }
-.card-container md-card{
-    margin: 5px;
+.card-container md-card {
+  margin: 5px;
 }
 .shopping-card-title {
   margin-left: 20px;
@@ -36,5 +35,4 @@
 
 .shopping-cart-column {
   margin-right: 0px;
-
 }

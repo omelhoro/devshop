@@ -10,18 +10,8 @@
     "noUnusedLocals": true,
     "outDir": "out/",
     "types": ["node"],
-    "lib": [
-      "es6",
-      "es2017.object",
-      "es2017.string"
-    ]
+    "lib": ["es6", "es2017.object", "es2017.string"]
   },
-  "include": [
-    "./main.ts"
-  ],
-  "exclude": [
-    "bin",
-    "node_modules",
-    "**/*.spec.tsx"
-  ]
+  "include": ["./main.ts"],
+  "exclude": ["bin", "node_modules", "**/*.spec.tsx"]
 }

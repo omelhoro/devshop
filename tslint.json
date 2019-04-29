@@ -1,39 +1,24 @@
 {
-  "extends": [
-    "tslint:recommended"
-  ],
+  "extends": ["tslint:recommended"],
   "linterOptions": {
-    "exclude": [
-      "src/*.d.ts"
-    ]
+    "exclude": ["src/*.d.ts"]
   },
   "rules": {
-    "trailing-comma": [false, {"multiline": "always", "singleline": "never"}],
+    "trailing-comma": [false, { "multiline": "always", "singleline": "never" }],
     "interface-name": [false, "always-prefix"],
-    "no-console": [true,
-      "time",
-      "timeEnd",
-      "trace"
-    ],
-    "max-line-length": [
-      true,
-      120
-    ],
+    "no-console": [true, "time", "timeEnd", "trace"],
+    "max-line-length": [true, 120],
     "no-string-literal": false,
     "no-use-before-declare": true,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "member-access": false,
     "max-classes-per-file": 0,
+    "arrow-parens": false,
     "interface-name": [true, "always-prefix"],
     "semicolon": [true, "always", "ignore-interfaces"],
-    "indent": [true, "tabs", 2],
-    "quotemark": [
-      true,
-      "single",
-      "avoid-escape",
-      "jsx-double"
-    ],
+    "indent": [true, "spaces", 2],
+    "quotemark": [true, "double", "avoid-escape", "jsx-double"],
     "variable-name": [
       true,
       "allow-leading-underscore",

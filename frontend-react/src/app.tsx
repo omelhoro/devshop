@@ -31,6 +31,4 @@ function App({ store, history }: IProps) {
   );
 }
 
-export default (module.hot
-  ? require("react-hot-loader").hot(module)(App)
-  : App);
+export default App;

@@ -5,6 +5,7 @@ frontend-react-context/dist
 
 frontend-react/node_modules
 frontend-react/dist
+frontend-react/.cache
 
 frontend-ng5/node_modules
 frontend-ng5/dist

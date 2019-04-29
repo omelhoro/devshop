@@ -7,10 +7,13 @@ import "./css/site.css";
 import store, { history } from "./store";
 import App from "./app";
 
-const renderRoot = (app: JSX.Element) => {
+const renderApp = () => {
+  const app = <App store={store} history={history} />;
   document.getElementById("loader").style.display = "none";
   document.getElementById("react-root").style.display = "block";
   ReactDOM.render(app, document.getElementById("react-root"));
 };
 
-renderRoot(<App store={store} history={history} />);
+renderApp();
+
+module.hot.accept(renderApp);

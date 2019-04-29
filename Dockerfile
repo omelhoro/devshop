@@ -8,7 +8,6 @@ RUN npm i
 COPY ./frontend-react /app
 RUN source vars-prod.sh; npm run build
 
-
 FROM node:alpine as frontend-react-context-builder
 WORKDIR /app
 RUN apk add --no-cache bash git
@@ -19,7 +18,6 @@ RUN npm i
 COPY ./frontend-react-context /app
 RUN source vars-prod.sh; npm run build:prod
 
-#
 # FROM node:9-alpine as frontend-ng-builder
 # WORKDIR /app
 # RUN apk add --no-cache bash git
@@ -34,7 +32,6 @@ RUN source vars-prod.sh; npm run build:prod
 FROM node:alpine
 WORKDIR /app
 RUN apk add alpine-sdk python-dev
-
 COPY ./backend/package-lock.json /app
 COPY ./backend/package.json /app
 ENV NODE_ENV production

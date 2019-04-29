@@ -1,7 +1,6 @@
 import { getStore } from "kea";
 import { createBrowserHistory } from "history";
 import sagaPlugin from "kea-saga";
-import { reducer as formReducer } from "redux-form";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 
 const baseUrl = document.getElementsByTagName("base")[0].getAttribute("href")!;
@@ -20,8 +19,7 @@ const store = getStore({
 
   plugins: [sagaPlugin],
   reducers: {
-    router: connectRouter(history),
-    form: formReducer
+    router: connectRouter(history)
   }
 });
 

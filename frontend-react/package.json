@@ -10,7 +10,8 @@
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "source vars-prod.sh && parcel build index.html --public-url /react-kea",
+    "build": "source vars-prod.sh && parcel build index.html && npm run set:base-url",
+    "set:base-url": "sed -i -e 's/base href=\"\"/base href=\"\\/react-kea\"/g' dist/index.html",
     "dev": "source vars-dev.sh && parcel index.html",
     "tsc": "tsc -p . --noEmit",
     "tsc:watch": "tsc -p . --noEmit -w",

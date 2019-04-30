@@ -9,6 +9,11 @@ export async function findByName(name: string) {
       `?name=${name}`
     )
   );
+
+  if (response.status === 404) {
+    return [];
+  }
+
   if (response.status !== 200) {
     throw response;
   }
@@ -24,6 +29,11 @@ export async function findByOrgName(name: string) {
       `?orgName=${name}`
     )
   );
+
+  if (response.status === 404) {
+    return [];
+  }
+
   if (response.status !== 200) {
     throw response;
   }

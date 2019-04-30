@@ -1,52 +1,16 @@
 pipeline:
-
-  # build:
-  #   image: node
-  #   secrets: [ vault_pass ]
-  #   commands:
-  #     - npm i --loglevel silent
-  #     - VAULT_PASS="$${VAULT_PASS}" ./vault/decrypt.sh
-  #
-  #     - npm run test-unitserver
-  #     - DB_PATH=/tmp/db npm run test-integration
-  #     - npm run test-unitclient
-      # - npm run lint
-
   docker:
     image: plugins/docker:latest
     storage_driver: vfs
     repo: omelhoro1/devshop
-    secrets: [ docker_username, docker_password ]
-    # build_args:
-    #   # - "MYENV=lala it is great"
-    #   # - "DOCKER_USERNAMED=$${DOCKER_USERNAME}"
-    #   # - DOCKER_USERNAMEDED=$DOCKER_USERNAME
-    #   # - DOCKER_USERNAMEDEDED=$docker_username
-    #   - docker_username
-    #   - docker_password
-    build_args_from_env: [ docker_username ]
-    # args:
-    #   - docker_username
-    #   - DOCKER_USERNAMEDED=$DOCKER_USERNAME
-    #   - DOCKER_USERNAME="$${DOCKER_USERNAME}"
-    # args_from_env:
-    #   - docker_username
-    # args-from-env:
-    #   - docker_username
-    #   - DOCKER_USERNAME
-    # build_args_from_env:
-    #   - docker_username
-    # build-args-from-env:
-    #   - docker_username
-    # env-args:
-    #   - docker_username
+    secrets: [docker_username, docker_password]
     when:
       branch: master
 
   deploy:
     image: drillster/drone-rsync
     user: captain
-    hosts: [ "software-unchained.com" ]
+    hosts: ["software-unchained.com"]
     port: 22
     target: /tmp/devshop-${DRONE_COMMIT}/
     include:
@@ -54,7 +18,7 @@ pipeline:
     exclude:
       - "**.*"
     delete: false
-    secrets: [ rsync_key ]
+    secrets: [rsync_key]
     script:
       - docker-compose -f /tmp/devshop-${DRONE_COMMIT}/docker-compose.yml pull
       - docker-compose -f /tmp/devshop-${DRONE_COMMIT}/docker-compose.yml -p devshop up -d

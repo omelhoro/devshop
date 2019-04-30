@@ -1,14 +1,12 @@
 import * as React from "react";
 
-export const getValue = elem => document.querySelector(elem).value;
-
 export default ({ loading, fetch }) => (
   <form
     action="#"
     style={{ width: "100%" }}
     onSubmit={evt => {
       evt.preventDefault();
-      const name = getValue("#dev-name");
+      const name = new FormData(evt.target as HTMLFormElement).get("name");
       if (!name) {
         return;
       }
@@ -18,14 +16,14 @@ export default ({ loading, fetch }) => (
     <div className="input-group mb-3">
       <div className="input-group-prepend">
         <span className="input-group-text" style={{ minWidth: "85px" }}>
-          By User
+          User or Org
         </span>
       </div>
       <input
-        id="dev-name"
+        name="name"
         className="form-control"
         type="text"
-        placeholder="e.g. omelhoro"
+        placeholder="e.g. omelhoro or Homebrew"
       />
       <div className="input-group-append">
         <button
@@ -41,10 +39,10 @@ export default ({ loading, fetch }) => (
             <i className="fa fa-spinner fa-spin" style={{ padding: "4px" }} />
           ) : (
             <i className="material-icons" style={{ marginRight: "4px" }}>
-              person
+              search
             </i>
           )}
-          <span>Import!</span>
+          <span>Search</span>
         </button>
       </div>
     </div>

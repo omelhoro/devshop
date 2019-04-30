@@ -1,12 +1,10 @@
 import { kea, Dispatcheable } from "kea";
 import { concat, flow, identity, mapValues, set, uniqBy } from "lodash/fp";
 import * as React from "react";
-import { Action } from "redux";
 import { put } from "redux-saga/effects";
 import * as developerService from "~/src/services/developer";
 import handleAjaxError from "~/src/utils/handle-ajax-error";
-import SearchFormOrg from "../components/search-form-organisations";
-import SearchFormUser from "../components/search-form-user";
+import SearchForm from "../components/search-form";
 
 interface IReducerState {
   developers: IDeveloper[];
@@ -14,19 +12,13 @@ interface IReducerState {
 }
 
 interface IActions {
-  addDevelopersToList(developer: IDeveloper | IDeveloper[]): IDeveloper;
-  findDeveloperByName(name: string): string;
-  findDeveloperByOrgName(name: string): string;
+  addDevelopersToList(developer: IDeveloper[]): IDeveloper[];
+  importDevelopers(name: string): string;
   onAjaxError(errorMsg: string): string;
 }
 
 interface IWorkers {
-  findDeveloperByName: (
-    name: ReturnType<IActions["findDeveloperByName"]>
-  ) => void;
-  findDeveloperByOrgName: (
-    name: ReturnType<IActions["findDeveloperByOrgName"]>
-  ) => void;
+  importDevelopers: (name: ReturnType<IActions["importDevelopers"]>) => void;
 }
 
 interface ISelectorState {
@@ -43,8 +35,7 @@ export const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
   path: () => ["scenes", "search"],
 
   actions: () => ({
-    findDeveloperByName: identity,
-    findDeveloperByOrgName: identity,
+    importDevelopers: identity,
     addDevelopersToList: identity,
     onAjaxError: identity
   }),
@@ -53,49 +44,40 @@ export const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
     developers: [
       [],
       {
-        [actions.addDevelopersToList]: (developers, developer) =>
+        [actions.addDevelopersToList]: (previousResult, newResult) =>
           flow(
-            concat(developer),
+            concat(newResult),
             uniqBy("login")
-          )(developers)
+          )(previousResult)
       }
     ],
     loading: [
-      { findDeveloperByName: false, findDeveloperByOrgName: false },
+      { importDevelopers: false, findDeveloperByOrgName: false },
       {
         [actions.addDevelopersToList]: mapValues(false),
-        [actions.findDeveloperByName]: set("findDeveloperByName", true),
-        [actions.findDeveloperByOrgName]: set("findDeveloperByOrgName", true),
+        [actions.importDevelopers]: set("importDevelopers", true),
         [actions.onAjaxError]: mapValues(false)
       }
     ]
   }),
 
   takeLatest: ({ actions, workers }) => ({
-    [actions.findDeveloperByName]: action =>
-      workers.findDeveloperByName(action.payload),
-    [actions.findDeveloperByOrgName]: action =>
-      workers.findDeveloperByOrgName(action.payload)
+    [actions.importDevelopers]: action =>
+      workers.importDevelopers(action.payload)
   }),
 
   workers: {
-    *findDeveloperByName(name) {
+    *importDevelopers(name) {
       const { addDevelopersToList, onAjaxError } = this
         .actions as Dispatcheable<IActions>;
       try {
-        const developer = yield developerService.findByName(name);
-        yield put(addDevelopersToList(developer));
-      } catch (error) {
-        const msg = yield handleAjaxError(error);
-        yield put(onAjaxError(msg));
-      }
-    },
-    *findDeveloperByOrgName(name) {
-      const { addDevelopersToList, onAjaxError } = this
-        .actions as Dispatcheable<IActions>;
-      try {
-        const developer = yield developerService.findByOrgName(name);
-        yield put(addDevelopersToList(developer));
+        const [developer, developersFromOrg] = yield Promise.all([
+          developerService.findByName(name),
+          developerService.findByOrgName(name)
+        ]);
+        yield put(
+          addDevelopersToList([].concat(developer).concat(developersFromOrg))
+        );
       } catch (error) {
         const msg = yield handleAjaxError(error);
         yield put(onAjaxError(msg));
@@ -106,21 +88,14 @@ export const logic = kea<IActions, IReducerState, ISelectorState, IWorkers>({
 
 export function SearchContainer({
   loading,
-  actions: { findDeveloperByOrgName, findDeveloperByName }
+  actions: { importDevelopers }
 }: IReducerState & ISelectorState & { actions: IActions }) {
   return (
     <div>
       <div className="row">
-        <SearchFormUser
-          loading={loading.findDeveloperByName}
-          fetch={findDeveloperByName}
-        />
-      </div>
-
-      <div className="row">
-        <SearchFormOrg
-          loading={loading.findDeveloperByOrgName}
-          fetch={findDeveloperByOrgName}
+        <SearchForm
+          loading={loading.importDevelopers}
+          fetch={importDevelopers}
         />
       </div>
     </div>

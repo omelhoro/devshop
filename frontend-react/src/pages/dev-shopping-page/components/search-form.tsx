@@ -21,6 +21,7 @@ export default ({ loading, fetch }) => (
       </div>
       <input
         name="name"
+        autoFocus
         className="form-control"
         type="text"
         placeholder="e.g. omelhoro or Homebrew"

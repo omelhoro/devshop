@@ -1,6 +1,11 @@
 import * as React from "react";
+import { IDeveloperOrder } from "../index";
 
-export default ({ developer }) => (
+export default ({
+  developerOrder: { developer, orderInfo }
+}: {
+  developerOrder: IDeveloperOrder;
+}) => (
   <div key={`${developer.login}-bought`} className="well developer-entry">
     <div className="media">
       <div className="media-left media-top">
@@ -44,11 +49,11 @@ export default ({ developer }) => (
             </tr>
             <tr>
               <td>Ordered hours</td>
-              <td>{developer.appAdded.orderedHours}</td>
+              <td>{orderInfo.hours}</td>
             </tr>
           </tbody>
         </table>
-        <h4>Cost: {developer.appAdded.totalSum}$</h4>
+        <h4>Cost: {orderInfo.totalPrice}$</h4>
       </div>
     </div>
   </div>

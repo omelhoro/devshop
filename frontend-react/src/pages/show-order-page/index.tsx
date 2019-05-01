@@ -1,6 +1,6 @@
 import { Dispatcheable, kea } from "kea";
 import { identity } from "lodash/fp";
-import * as moment from "moment";
+import moment from "moment";
 import * as queryString from "query-string";
 import * as React from "react";
 import { put } from "redux-saga/effects";
@@ -18,22 +18,33 @@ interface IActions {
   onLoadError(errorMsg: string): { errorMsg: string };
 }
 
-interface IDeveloper {
-  login: string;
-  appAdded: {
-    orderedHours: number;
-    totalSum: number;
+export interface IDeveloperOrder {
+  developer: {
+    login: string;
+    avatar_url: string;
+    followers: number;
+    public_gists: number;
+    public_repos: number;
+    created_at: number;
+    appAdded: {
+      price: number;
+    };
+  };
+  orderInfo: {
+    hours: number;
+    totalPrice: number;
+    addedToCart: string;
   };
 }
 
 interface IOrder {
   coupon: string;
-  cart: IDeveloper[];
-  sum: number;
+  cart: IDeveloperOrder[];
+  cartSum: number;
   timestamp: string;
 }
 
-const just = (val?) => (state, _val) => val || _val;
+const just = (val?) => (state, _val) => (val === undefined ? _val : val);
 
 const logic = kea<IActions, IReducerState, {}, {}>({
   path: () => ["scenes", "show-order"],
@@ -47,8 +58,8 @@ const logic = kea<IActions, IReducerState, {}, {}>({
     order: [
       {
         cart: [],
+        totalSum: 0,
         coupon: "",
-        sum: 0,
         timestamp: ""
       },
       {
@@ -65,7 +76,6 @@ const logic = kea<IActions, IReducerState, {}, {}>({
   }),
 
   *start() {
-    console.log("start");
     const { setOrder, onLoadError } = this.actions as Dispatcheable<IActions>;
     const query = queryString.parse(location.search);
     if (query.token) {
@@ -96,12 +106,15 @@ function ShowOrderPage({ errorMsg, order }: IShowOrderPageProps) {
       ) : (
         <div>
           <h2>
-            Your order from
+            Your order from{" "}
             <i>{moment(order.timestamp).format("HH:mm DD-MM-YYYY")}</i> with a
-            total value of <i>{order.sum}$</i>
+            total value of <i>{order.cartSum}$</i>
           </h2>
-          {order.cart.map(developer => (
-            <OrderElement key={`${developer.login}`} developer={developer} />
+          {order.cart.map(developerOrder => (
+            <OrderElement
+              key={`${developerOrder.developer}`}
+              developerOrder={developerOrder}
+            />
           ))}
         </div>
       )}
